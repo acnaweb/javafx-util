@@ -12,14 +12,10 @@ public abstract class AbstractApplication extends Application {
 		return stage;
 	}
 
-	protected abstract void initListeners();
-
 	protected abstract void buildScene() throws IOException;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-
-		initListeners();
 
 		stage = primaryStage;
 
