@@ -1,0 +1,7 @@
+@charset "UTF-8";
+
+.cartao_amarelo {
+	-fx-text-alignment: center;
+	-fx-text-fill: #1C1C1C;
+  	-fx-fill: #FFFF00;
+}
