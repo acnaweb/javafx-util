@@ -3,14 +3,11 @@ package util.javafx.form;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import org.springframework.stereotype.Controller;
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
-@Controller
 public class FormController implements Initializable {
 
 	@FXML
