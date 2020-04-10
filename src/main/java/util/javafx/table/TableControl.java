@@ -8,7 +8,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
 
 public class TableControl<T> extends VBox {
-	private static final String FXML = "InfoControl.fxml";
+	private static final String FXML = "TableControl.fxml";
 
 	@FXML
 	private TableView<?> table;

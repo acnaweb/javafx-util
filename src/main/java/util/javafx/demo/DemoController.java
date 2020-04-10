@@ -9,6 +9,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import util.javafx.DialogUtils;
 import util.javafx.demo.controller.Controller;
+import util.javafx.table.TableControl;
 
 public class DemoController implements Initializable, Controller {
 
@@ -27,6 +28,7 @@ public class DemoController implements Initializable, Controller {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initListeners();
+		createControls();
 	}
 
 	@Override
@@ -38,6 +40,13 @@ public class DemoController implements Initializable, Controller {
 		mnuDelete.setOnAction(evt -> {
 			DialogUtils.showAlert("Delete");
 		});
+	}
+
+	@Override
+	public void createControls() {
+		TableControl control = new  TableControl();
+		mainContent.getChildren().add(control);
+		
 	}
 
 }
