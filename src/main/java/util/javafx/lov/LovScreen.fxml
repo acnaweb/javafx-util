@@ -9,43 +9,56 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="300.0" maxWidth="600.0" minHeight="300.0" minWidth="600.0" prefHeight="300.0" prefWidth="600.0" stylesheets="@bootstrapfx.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.footstats.javafx.lov.LovController">
-   <styleClass>
-      <String fx:value="panel" />
-      <String fx:value="panel-info" />
-   </styleClass>
-   <children>
-      <Label alignment="CENTER" prefHeight="38.0" prefWidth="627.0" styleClass="panel-heading" text="Lista de Valores" textAlignment="CENTER" />
-      <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="398.0" spacing="5.0">
-         <children>
-            <TextField fx:id="lblText" prefHeight="26.0" prefWidth="524.0" />
-            <Button fx:id="btnFilter" mnemonicParsing="false" text="Filtrar" />
-         </children>
-         <VBox.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </VBox.margin>
-      </HBox>
-      <TableView fx:id="tblData" prefHeight="200.0" prefWidth="200.0" />
-      <HBox alignment="CENTER" prefHeight="36.0" prefWidth="398.0" spacing="20.0">
-         <children>
-            <Button fx:id="btnClose" mnemonicParsing="false" text="Selecionar">
-               <styleClass>
-                  <String fx:value="btn" />
-                  <String fx:value="btn-primary" />
-                  <String fx:value="btn-sm" />
-               </styleClass>
-            </Button>
-            <Button fx:id="btnCancel" mnemonicParsing="false" text="Cancelar">
-               <styleClass>
-                  <String fx:value="btn" />
-                  <String fx:value="btn-default" />
-                  <String fx:value="btn-sm" />
-               </styleClass>
-            </Button>
-         </children>
-         <VBox.margin>
-            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-         </VBox.margin>
-      </HBox>
-   </children>
+<VBox maxHeight="300.0" maxWidth="600.0" minHeight="300.0"
+	minWidth="600.0" prefHeight="300.0" prefWidth="600.0"
+	stylesheets="@../css/bootstrapfx.css" xmlns="http://javafx.com/javafx"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="net.footstats.javafx.lov.LovController">
+	<styleClass>
+		<String fx:value="panel" />
+		<String fx:value="panel-info" />
+	</styleClass>
+	<children>
+		<Label alignment="CENTER" prefHeight="38.0" prefWidth="627.0"
+			styleClass="panel-heading" text="Lista de Valores"
+			textAlignment="CENTER" />
+		<HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="398.0"
+			spacing="5.0">
+			<children>
+				<TextField fx:id="lblText" prefHeight="26.0"
+					prefWidth="524.0" />
+				<Button fx:id="btnFilter" mnemonicParsing="false"
+					text="Filtrar" />
+			</children>
+			<VBox.margin>
+				<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+			</VBox.margin>
+		</HBox>
+		<TableView fx:id="tblData" prefHeight="200.0"
+			prefWidth="200.0" />
+		<HBox alignment="CENTER" prefHeight="36.0" prefWidth="398.0"
+			spacing="20.0">
+			<children>
+				<Button fx:id="btnClose" mnemonicParsing="false"
+					text="Selecionar">
+					<styleClass>
+						<String fx:value="btn" />
+						<String fx:value="btn-primary" />
+						<String fx:value="btn-sm" />
+					</styleClass>
+				</Button>
+				<Button fx:id="btnCancel" mnemonicParsing="false"
+					text="Cancelar">
+					<styleClass>
+						<String fx:value="btn" />
+						<String fx:value="btn-default" />
+						<String fx:value="btn-sm" />
+					</styleClass>
+				</Button>
+			</children>
+			<VBox.margin>
+				<Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+			</VBox.margin>
+		</HBox>
+	</children>
 </VBox>

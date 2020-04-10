@@ -7,14 +7,20 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="1.7976931348623157E308" prefHeight="700.0" prefWidth="1360.0" stylesheets="@../../javafx/bootstrapfx.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.footstats.javafx.template.TemplateController">
+<BorderPane maxHeight="1.7976931348623157E308"
+	prefHeight="700.0" prefWidth="1360.0"
+	stylesheets="@../../javafx/bootstrapfx.css"
+	xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="net.footstats.javafx.template.TemplateController">
 	<center>
 		<VBox BorderPane.alignment="CENTER">
 			<children>
 				<!-- TABLE -->
-				<VBox maxHeight="200.0" minHeight="200.0" prefHeight="200.0" VBox.vgrow="ALWAYS">
+				<VBox maxHeight="200.0" minHeight="200.0" prefHeight="200.0"
+					VBox.vgrow="ALWAYS">
 					<children>
-						<fx:include fx:id="table" source="../../javafx/table/TableScreen.fxml" />
+						<!-- fx:include fx:id="table" source="../../javafx/table/TableScreen.fxml" 
+							/ -->
 					</children>
 				</VBox>
 				<!-- BUTTONS -->
@@ -22,20 +28,14 @@
 					<children>
 						<ToolBar>
 							<items>
-								<Button fx:id="btnCrud" mnemonicParsing="false" text="Manutenção">
+								<Button fx:id="btnCrud" mnemonicParsing="false"
+									text="Manutenção">
 									<styleClass>
 										<String fx:value="btn" />
 										<String fx:value="btn-default" />
 										<String fx:value="btn-sm" />
 									</styleClass>
 								</Button>
-                        <Button mnemonicParsing="false" text="Botão 1">
-                           <styleClass>
-                              <String fx:value="btn" />
-                              <String fx:value="btn-default" />
-                              <String fx:value="btn-sm" />
-                           </styleClass>
-                        </Button>
 							</items>
 						</ToolBar>
 					</children>
@@ -45,7 +45,8 @@
 					<content>
 						<VBox>
 							<children>
-								<fx:include fx:id="form" source="../../javafx/form/FormScreen.fxml" />
+								<!-- fx:include fx:id="form" source="../../javafx/form/FormScreen.fxml" 
+									/ -->
 							</children>
 						</VBox>
 					</content>
