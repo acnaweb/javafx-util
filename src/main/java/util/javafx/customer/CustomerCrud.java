@@ -1,11 +1,10 @@
-package util.javafx.crud;
+package util.javafx.customer;
 
 import java.util.Map;
 
 import javafx.scene.Node;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
-import util.javafx.customer.Customer;
 import util.javafx.form.ControlBuilder;
 import util.javafx.form.ControlType;
 import util.javafx.function.FormBuilder;
