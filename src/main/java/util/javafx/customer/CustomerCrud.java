@@ -32,7 +32,6 @@ public class CustomerCrud {
 	};
 
 	private static OnModelToControlListener<Customer> onModelToControlListener = new OnModelToControlListener<Customer>() {
-
 		@Override
 		public void bind(Map<String, Node> controls, Customer data) {
 			FormUtils.setValueToControl(controls, "id", data.getId());
@@ -42,7 +41,6 @@ public class CustomerCrud {
 	};
 
 	private static TableBuilder<Customer> tableBuilder = new TableBuilder<Customer>() {
-
 		@Override
 		public void build(TableView<Customer> table) {
 			table.setEditable(false);
