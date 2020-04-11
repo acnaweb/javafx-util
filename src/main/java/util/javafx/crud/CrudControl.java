@@ -5,8 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Supplier;
 
 import javafx.collections.FXCollections;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -14,8 +17,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import util.javafx.EntityBase;
 import util.javafx.form.FormState;
-import util.javafx.form.FormUtils;
 import util.javafx.function.FormBuilder;
 import util.javafx.function.OnControlToModelListener;
 import util.javafx.function.OnLoadListener;
@@ -24,8 +27,9 @@ import util.javafx.function.OnPersistListener;
 import util.javafx.function.OnRefreshListener;
 import util.javafx.function.OnSelectListener;
 import util.javafx.function.TableBuilder;
+import util.javafx.util.FormUtils;
 
-public class CrudControl<T> extends VBox implements OnLoadListener<T>, OnSelectListener<T> {
+public class CrudControl<T extends EntityBase> extends VBox implements OnLoadListener<T>, OnSelectListener<T> {
 	private static final String FXML = "CrudControl.fxml";
 
 	@FXML
@@ -34,6 +38,7 @@ public class CrudControl<T> extends VBox implements OnLoadListener<T>, OnSelectL
 	@FXML
 	private TableView<T> table;
 	private T selectedItem;
+	private Supplier<T> supplier;
 
 	@FXML
 	private Button btnNew;
@@ -77,20 +82,63 @@ public class CrudControl<T> extends VBox implements OnLoadListener<T>, OnSelectL
 	private void init() {
 		updateControls(FormState.SETTING_UP);
 		initListeners();
-
 		updateControls(FormState.IDLE);
-
 	}
 
 	private void initListeners() {
+		/**********************************************************/
 		table.setOnMouseClicked(evt -> {
 			notify(table.getSelectionModel().getSelectedItem());
 		});
 
-		btnRefresh.setOnAction(evt -> {
-			onRefreshListener.refresh();
+		/**********************************************************/
+		btnNew.setOnAction(evt -> {
+			selectedItem = supplier.get();
+			updateControls(FormState.EDITING);
 		});
 
+		/**********************************************************/
+		btnRemove.setOnAction(evt -> {
+			updateControls(FormState.PERSISTING);
+			if (selectedItem != null) {
+				selectedItem.deleteEntity();
+				onPersistListener.persist(selectedItem);
+				btnRefresh.fire();
+			}
+		});
+
+		/**********************************************************/
+		btnRefresh.setOnAction(evt -> {
+			Service<Void> serviceWork = new Service<Void>() {
+
+				@Override
+				protected Task<Void> createTask() {
+					return new Task<Void>() {
+
+						@Override
+						protected Void call() throws Exception {
+							updateControls(FormState.LOADING);
+							selectedItem = null;
+							onRefreshListener.refresh();
+							updateControls(FormState.IDLE);
+							return null;
+						}
+					};
+				}
+			};
+
+			serviceWork.setOnSucceeded(par1 -> {
+			});
+
+			serviceWork.setOnFailed(par1 -> {
+				System.out.println(par1.getEventType().getName());
+
+			});
+
+			serviceWork.start();
+		});
+
+		/**********************************************************/
 		btnSave.setOnAction(evt -> {
 			updateControls(FormState.PERSISTING);
 			onControlToModelListener.bind(controls, selectedItem);
@@ -164,6 +212,10 @@ public class CrudControl<T> extends VBox implements OnLoadListener<T>, OnSelectL
 
 	}
 
+	public void setSupplier(Supplier<T> supplier) {
+		this.supplier = supplier;
+	}
+
 	public void updateControls(FormState formState) {
 		FormUtils.clearControls(controls);
 
@@ -200,8 +252,7 @@ public class CrudControl<T> extends VBox implements OnLoadListener<T>, OnSelectL
 			break;
 		}
 	}
-	
-	
+
 	public boolean validateListeners() {
 		Objects.requireNonNull(onRefreshListener, "onRefreshListener null");
 		Objects.requireNonNull(onControlToModelListener, "onControlToModelListener null");

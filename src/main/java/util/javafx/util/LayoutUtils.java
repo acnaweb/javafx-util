@@ -1,4 +1,4 @@
-package util.javafx;
+package util.javafx.util;
 
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressIndicator;
@@ -7,7 +7,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public final class LayoutUtil {
+public final class LayoutUtils {
 
 	public static void showProgressIndicator() {
 		VBox vbox = new VBox();

@@ -7,16 +7,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
-import util.javafx.DialogUtils;
 import util.javafx.crud.CrudControl;
 import util.javafx.crud.CustomerCrud;
 import util.javafx.customer.Customer;
 import util.javafx.customer.CustomerRepository;
-import util.javafx.demo.controller.Controller;
+import util.javafx.customer.CustomerSupplier;
 import util.javafx.function.OnPersistListener;
 import util.javafx.function.OnRefreshListener;
+import util.javafx.util.DialogUtils;
 
-public class MainController implements Initializable, Controller, OnRefreshListener, OnPersistListener<Customer> {
+public class MainController implements Initializable, OnRefreshListener, OnPersistListener<Customer> {
 
 	@FXML
 	private MenuItem mnuClose;
@@ -38,7 +38,6 @@ public class MainController implements Initializable, Controller, OnRefreshListe
 		createControls();
 	}
 
-	@Override
 	public void initListeners() {
 		mnuClose.setOnAction(evt -> {
 			DialogUtils.showAlert("Close");
@@ -49,7 +48,6 @@ public class MainController implements Initializable, Controller, OnRefreshListe
 		});
 	}
 
-	@Override
 	public void createControls() {
 		customerControl.createTable(CustomerCrud.getTableBuilder());
 		customerControl.createForm(CustomerCrud.getFormBuilder());
@@ -57,6 +55,7 @@ public class MainController implements Initializable, Controller, OnRefreshListe
 		customerControl.setOnRefreshListener(this);
 		customerControl.setOnPersistListener(this);
 		customerControl.setOnControlToModelListener(CustomerCrud.getOnControlToModelListener());
+		customerControl.setSupplier(new CustomerSupplier());
 
 		mainContent.getChildren().add(customerControl);
 

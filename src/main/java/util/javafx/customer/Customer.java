@@ -1,6 +1,8 @@
 package util.javafx.customer;
 
-public class Customer {
+import util.javafx.EntityBase;
+
+public class Customer implements EntityBase {
 	private int id;
 	private String name;
 
@@ -51,6 +53,11 @@ public class Customer {
 		builder.append(name);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	@Override
+	public void deleteEntity() {
+		System.out.println("deleteEntity");
 	}
 
 }

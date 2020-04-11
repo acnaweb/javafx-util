@@ -8,12 +8,12 @@ import javafx.scene.layout.GridPane;
 import util.javafx.customer.Customer;
 import util.javafx.form.ControlBuilder;
 import util.javafx.form.ControlType;
-import util.javafx.form.FormUtils;
 import util.javafx.function.FormBuilder;
 import util.javafx.function.OnControlToModelListener;
 import util.javafx.function.OnModelToControlListener;
 import util.javafx.function.TableBuilder;
 import util.javafx.function.TableColumnBuilder;
+import util.javafx.util.FormUtils;
 
 public final class CustomerCrud {
 

@@ -12,7 +12,7 @@ public final class ScreenManager {
 	private static Stage stage;
 	private static BorderPane main;
 
-	public static void showMain(Stage stage, String fxml) throws IOException {
+	public static void showMain(Stage stage, String title, String fxml) throws IOException {
 		ScreenManager.stage = stage;
 
 		FXMLLoader loader = new FXMLLoader();
@@ -20,7 +20,7 @@ public final class ScreenManager {
 		main = loader.load();
 
 		Scene scene = new Scene(main);
-		ScreenManager.stage.setTitle("Demo Application");
+		ScreenManager.stage.setTitle(title);
 		ScreenManager.stage.setScene(scene);
 		ScreenManager.stage.setMaximized(true);
 		ScreenManager.stage.show();
