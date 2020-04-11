@@ -1,4 +1,4 @@
-package util.javafx.table;
+package util.javafx.function;
 
 import java.util.Objects;
 

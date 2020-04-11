@@ -1,25 +1,27 @@
-package util.javafx.customer;
+package util.javafx.crud;
 
 import java.util.Map;
 
 import javafx.scene.Node;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
+import util.javafx.customer.Customer;
+import util.javafx.form.ControlBuilder;
 import util.javafx.form.ControlType;
-import util.javafx.form.FormControlBuilder;
 import util.javafx.form.FormUtils;
-import util.javafx.form.function.FormBuilder;
-import util.javafx.form.function.OnControlToModelListener;
-import util.javafx.form.function.OnModelToControlListener;
-import util.javafx.table.TableBuilder;
-import util.javafx.table.TableColumnBuilder;
+import util.javafx.function.FormBuilder;
+import util.javafx.function.OnControlToModelListener;
+import util.javafx.function.OnModelToControlListener;
+import util.javafx.function.TableBuilder;
+import util.javafx.function.TableColumnBuilder;
 
-public class CustomerCrud {
+public final class CustomerCrud {
+
 	private static FormBuilder formBuilder = new FormBuilder() {
 		@Override
 		public void build(GridPane gridControls, Map<String, Node> controls) {
-			FormControlBuilder.build(gridControls, controls, "ID", "id", 75, ControlType.INTEGER, null);
-			FormControlBuilder.build(gridControls, controls, "Nome", "name", 200, ControlType.TEXTFIELD, null);
+			ControlBuilder.build(gridControls, controls, "ID", "id", 75, ControlType.INTEGER, null);
+			ControlBuilder.build(gridControls, controls, "Nome", "name", 200, ControlType.TEXTFIELD, null);
 		}
 	};
 
@@ -48,5 +50,21 @@ public class CustomerCrud {
 			TableColumnBuilder.<Customer, Integer>build(table, "Nome", "name", 200, ControlType.TEXTFIELD);
 		}
 	};
+
+	public static FormBuilder getFormBuilder() {
+		return formBuilder;
+	}
+
+	public static OnControlToModelListener<Customer> getOnControlToModelListener() {
+		return onControlToModelListener;
+	}
+
+	public static OnModelToControlListener<Customer> getOnModelToControlListener() {
+		return onModelToControlListener;
+	}
+
+	public static TableBuilder<Customer> getTableBuilder() {
+		return tableBuilder;
+	}
 
 }

@@ -13,7 +13,7 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
-public class FormControlBuilder {
+public class ControlBuilder {
 
 	@SuppressWarnings("rawtypes")
 	public static <V, E extends Enum<E>> void build(GridPane gridControls, Map<String, Node> controls, String header,

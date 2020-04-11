@@ -8,18 +8,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import util.javafx.DialogUtils;
+import util.javafx.crud.CrudControl;
+import util.javafx.crud.CustomerCrud;
 import util.javafx.customer.Customer;
-import util.javafx.customer.CustomerControlToModel;
-import util.javafx.customer.CustomerCrud;
 import util.javafx.customer.CustomerRepository;
-import util.javafx.customer.CustomerTable;
-import util.javafx.customer.CustomerModelToControl;
 import util.javafx.demo.controller.Controller;
-import util.javafx.form.FormControl;
-import util.javafx.form.function.OnRefreshListener;
-import util.javafx.table.TableControl;
+import util.javafx.function.OnPersistListener;
+import util.javafx.function.OnRefreshListener;
 
-public class MainController implements Initializable, Controller, OnRefreshListener {
+public class MainController implements Initializable, Controller, OnRefreshListener, OnPersistListener<Customer> {
 
 	@FXML
 	private MenuItem mnuClose;
@@ -33,8 +30,7 @@ public class MainController implements Initializable, Controller, OnRefreshListe
 	@FXML
 	private VBox mainContent;
 
-	public TableControl<Customer> tableControl = new TableControl<Customer>();
-	public FormControl<Customer> formControl = new FormControl<Customer>();
+	public CrudControl<Customer> customerControl = new CrudControl<Customer>();
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -55,26 +51,28 @@ public class MainController implements Initializable, Controller, OnRefreshListe
 
 	@Override
 	public void createControls() {
+		customerControl.createTable(CustomerCrud.getTableBuilder());
+		customerControl.createForm(CustomerCrud.getFormBuilder());
+		customerControl.setOnModelToControlListener(CustomerCrud.getOnModelToControlListener());
+		customerControl.setOnRefreshListener(this);
+		customerControl.setOnPersistListener(this);
+		customerControl.setOnControlToModelListener(CustomerCrud.getOnControlToModelListener());
 
-//		tableControl.setOnSelectListener(formControl);
-//		tableControl.setOnRefreshListener(this);
-//		tableControl.createTable(new CustomerTable());
-//
-//		formControl.setOnModelToControlListener(new CustomerModelToControl());
-//		formControl.setOnControlToModelListener(new CustomerControlToModel());
-//		formControl.createForm(new CustomerForm());
-//
-//		mainContent.getChildren().add(tableControl);
-//		mainContent.getChildren().add(formControl);
+		mainContent.getChildren().add(customerControl);
 
 		refresh();
 	}
 
 	@Override
 	public void refresh() {
-//		System.out.println("load");
-//		tableControl.populate(CustomerRepository.list());
-//		formControl.clearControls();
+		System.out.println("load");
+		customerControl.populate(CustomerRepository.list());
+	}
+
+	@Override
+	public Customer persist(Customer data) {
+		System.out.println("persist");
+		return data;
 	}
 
 }
