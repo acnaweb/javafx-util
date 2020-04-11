@@ -51,7 +51,7 @@ public class TableControl<T> extends VBox {
 
 	public void setOnRefreshListener(OnRefreshListener refreshListener) {
 		btnRefresh.setOnAction(evt -> {
-			refreshListener.load();
+			refreshListener.refresh();
 		});
 	}
 

@@ -30,6 +30,7 @@ public interface Form<T> {
 		updateControls(FormState.SETTING_UP);
 		createForm(builder);
 		initListeners();
+		
 		updateControls(FormState.IDLE);
 	}
 

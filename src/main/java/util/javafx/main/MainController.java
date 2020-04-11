@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 import util.javafx.DialogUtils;
 import util.javafx.customer.Customer;
 import util.javafx.customer.CustomerControlToModel;
-import util.javafx.customer.CustomerForm;
+import util.javafx.customer.CustomerCrud;
 import util.javafx.customer.CustomerRepository;
 import util.javafx.customer.CustomerTable;
 import util.javafx.customer.CustomerModelToControl;
@@ -67,11 +67,11 @@ public class MainController implements Initializable, Controller, OnRefreshListe
 //		mainContent.getChildren().add(tableControl);
 //		mainContent.getChildren().add(formControl);
 
-		load();
+		refresh();
 	}
 
 	@Override
-	public void load() {
+	public void refresh() {
 //		System.out.println("load");
 //		tableControl.populate(CustomerRepository.list());
 //		formControl.clearControls();

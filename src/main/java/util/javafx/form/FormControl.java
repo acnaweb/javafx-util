@@ -155,13 +155,13 @@ public class FormControl<T> extends VBox implements Form<T> {
 	@Override
 	public void initListeners() {
 		btnSave.setOnAction(evt -> {
+			updateControls(FormState.PERSISTING);
+
 			onControlToModelListener.bind(controls, selectedItem);
-			System.out.println(selectedItem);
 
 			selectedItem = onPersistListener.persist(selectedItem);
-			// tableManager.table.getSelectionModel().select(selectedItem);
 			updateControls(FormState.IDLE);
-			// btnRefresh.fire();
+			onRefreshListener.refresh();
 		});
 
 		/**************************************************************************************/
@@ -174,7 +174,8 @@ public class FormControl<T> extends VBox implements Form<T> {
 
 	@Override
 	public boolean validateListeners() {
-		return false;
+		return (onRefreshListener != null && onControlToModelListener != null && onModelToControlListener != null
+				&& onSelectListener != null && onPersistListener != null);
 	}
 
 }
