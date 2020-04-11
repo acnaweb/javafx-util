@@ -16,7 +16,7 @@ import util.javafx.customer.CustomerTable;
 import util.javafx.customer.CustomerModelToControl;
 import util.javafx.demo.controller.Controller;
 import util.javafx.form.FormControl;
-import util.javafx.listener.OnRefreshListener;
+import util.javafx.form.function.OnRefreshListener;
 import util.javafx.table.TableControl;
 
 public class MainController implements Initializable, Controller, OnRefreshListener {
@@ -56,25 +56,25 @@ public class MainController implements Initializable, Controller, OnRefreshListe
 	@Override
 	public void createControls() {
 
-		tableControl.setOnSelectListener(formControl);
-		tableControl.setOnRefreshListener(this);
-		tableControl.createTable(new CustomerTable());
+//		tableControl.setOnSelectListener(formControl);
+//		tableControl.setOnRefreshListener(this);
+//		tableControl.createTable(new CustomerTable());
+//
+//		formControl.setOnModelToControlListener(new CustomerModelToControl());
+//		formControl.setOnControlToModelListener(new CustomerControlToModel());
+//		formControl.createForm(new CustomerForm());
+//
+//		mainContent.getChildren().add(tableControl);
+//		mainContent.getChildren().add(formControl);
 
-		formControl.setOnModelToControlListener(new CustomerModelToControl());
-		formControl.setOnControlToModelListener(new CustomerControlToModel());
-		formControl.createForm(new CustomerForm());
-
-		mainContent.getChildren().add(tableControl);
-		mainContent.getChildren().add(formControl);
-
-		loadData();
+		load();
 	}
 
 	@Override
-	public void loadData() {
-		System.out.println("load");
-		tableControl.populate(CustomerRepository.list());
-		formControl.clearControls();
+	public void load() {
+//		System.out.println("load");
+//		tableControl.populate(CustomerRepository.list());
+//		formControl.clearControls();
 	}
 
 }

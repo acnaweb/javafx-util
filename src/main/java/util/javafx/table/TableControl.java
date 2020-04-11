@@ -9,8 +9,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
-import util.javafx.listener.OnRefreshListener;
-import util.javafx.listener.OnSelectListener;
+import util.javafx.form.function.OnRefreshListener;
+import util.javafx.form.function.OnSelectListener;
 
 public class TableControl<T> extends VBox {
 	private static final String FXML = "TableControl.fxml";
@@ -51,7 +51,7 @@ public class TableControl<T> extends VBox {
 
 	public void setOnRefreshListener(OnRefreshListener refreshListener) {
 		btnRefresh.setOnAction(evt -> {
-			refreshListener.loadData();
+			refreshListener.load();
 		});
 	}
 

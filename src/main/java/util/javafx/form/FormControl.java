@@ -8,17 +8,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.TextInputControl;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import util.javafx.listener.OnControlToModelListener;
-import util.javafx.listener.OnSelectListener;
-import util.javafx.listener.OnValueToControlListener;
+import util.javafx.form.function.Form;
+import util.javafx.form.function.FormBuilder;
+import util.javafx.form.function.OnControlToModelListener;
+import util.javafx.form.function.OnModelToControlListener;
+import util.javafx.form.function.OnPersistListener;
+import util.javafx.form.function.OnRefreshListener;
+import util.javafx.form.function.OnSelectListener;
 
-public class FormControl<T> extends VBox implements OnSelectListener {
+public class FormControl<T> extends VBox implements Form<T> {
 	private static final String FXML = "FormControl.fxml";
 
 	@FXML
@@ -40,9 +40,15 @@ public class FormControl<T> extends VBox implements OnSelectListener {
 
 	private T selectedItem;
 
-	private OnValueToControlListener<T> modelToControlListener;
+	private OnRefreshListener onRefreshListener;
 
-	private OnControlToModelListener<T> controlToModelListener;
+	private OnControlToModelListener<T> onControlToModelListener;
+
+	private OnModelToControlListener<T> onModelToControlListener;
+
+	private OnSelectListener<T> onSelectListener;
+
+	private OnPersistListener<T> onPersistListener;
 
 	public FormControl() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
@@ -51,87 +57,24 @@ public class FormControl<T> extends VBox implements OnSelectListener {
 
 		try {
 			fxmlLoader.load();
-			initListeners();
 		} catch (IOException exception) {
 			throw new RuntimeException(exception);
 		}
 	}
 
-	private void initListeners() {
-		btnSave.setOnAction(evt -> {
-			controlToModelListener.bind(controls, selectedItem);
-			System.out.println(selectedItem);
-
-			// selectedItem = service.save(selectedItem);
-			// tableManager.table.getSelectionModel().select(selectedItem);
-			// updateControls(FormState.IDLE);
-			// btnRefresh.fire();
-		});
-
-	}
+//	/**************************************************************************************/
+//	@SuppressWarnings("unchecked")
+//	@Override
+//	public void notify(Object data) {
+//		if (data != null)
+//			selectedItem = (T) data;
+//
+//		// modelToControlListener.bind(controls, selectedItem);
+//	}
 
 	/**************************************************************************************/
-	public void setOnModelToControlListener(OnValueToControlListener<T> modelToControlListener) {
-		this.modelToControlListener = modelToControlListener;
-	}
-
-	/**************************************************************************************/
-	public void createForm(FormBuilder formBuilder) {
-		formBuilder.build(gridControls, controls);
-	}
-
-	/**************************************************************************************/
-	@SuppressWarnings("unchecked")
-	@Override
-	public void notify(Object data) {
-		if (data != null)
-			selectedItem = (T) data;
-
-		modelToControlListener.bind(controls, selectedItem);
-	}
-
-	/**************************************************************************************/
-
-	/**************************************************************************************/
-	@SuppressWarnings("unchecked")
-	public final void clearControls() {
-		controls.entrySet().stream().forEach(entry -> {
-			if (entry.getValue() instanceof TextInputControl) {
-				((TextInputControl) entry.getValue()).clear();
-			} else if (entry.getValue() instanceof CheckBox) {
-				((CheckBox) entry.getValue()).setSelected(false);
-			} else if (entry.getValue() instanceof Spinner) {
-				try {
-					((Spinner<Integer>) entry.getValue()).getValueFactory().setValue(0);
-				} catch (Exception e) {
-				}
-			} else if (entry.getValue() instanceof ComboBox) {
-				((ComboBox<String>) entry.getValue()).setValue(null);
-			}
-		});
-	}
-
-	/**************************************************************************************/
-	private final void disableControls(boolean status) {
-		controls.entrySet().stream().forEach(entry -> {
-			if (entry.getValue() instanceof Node) {
-				((Node) entry.getValue()).setDisable(status);
-			}
-		});
-	}
-
-	/**************************************************************************************/
-	private void setCancelAction(Button btn) {
-		btnCancel = btn;
-		btnCancel.setOnAction(evt -> {
-			selectedItem = null;
-			updateControls(FormState.IDLE);
-		});
-	}
-
-	/**************************************************************************************/
-	private void updateControls(FormState formState) {
-		clearControls();
+	public void updateControls(FormState formState) {
+		FormUtils.clearControls(controls);
 
 		switch (formState) {
 		case IDLE:
@@ -139,33 +82,99 @@ public class FormControl<T> extends VBox implements OnSelectListener {
 			btnSave.setDisable(true);
 			btnRemove.setDisable(true);
 			btnCancel.setDisable(true);
-			disableControls(true);
+			FormUtils.disableControls(controls, true);
 			break;
 		case LOADING:
 			btnNew.setDisable(true);
 			btnSave.setDisable(true);
 			btnRemove.setDisable(true);
 			btnCancel.setDisable(true);
-			disableControls(true);
+			FormUtils.disableControls(controls, true);
 			break;
 		case EDITING:
 			btnNew.setDisable(false);
 			btnSave.setDisable(false);
 			btnRemove.setDisable(false);
 			btnCancel.setDisable(false);
-			disableControls(false);
+			FormUtils.disableControls(controls, false);
+			break;
+		case SETTING_UP:
+			btnNew.setDisable(false);
+			btnSave.setDisable(false);
+			btnRemove.setDisable(false);
+			btnCancel.setDisable(false);
+			FormUtils.disableControls(controls, true);
+			break;
+		default:
 			break;
 		}
+	}
+
+	@Override
+	public T getSelectedItem() {
+		return this.selectedItem;
+	}
+
+	@Override
+	public void setSelectedItem(T selectedItem) {
+		this.selectedItem = selectedItem;
+	}
+
+	@Override
+	public void createForm(FormBuilder builder) {
+		builder.build(gridControls, controls);
+	}
+
+	@Override
+	public void setOnRefreshListener(OnRefreshListener onRefreshListener) {
+		this.onRefreshListener = onRefreshListener;
+	}
+
+	@Override
+	public void setOnControlToModelListener(OnControlToModelListener<T> onControlToModelListener) {
+		this.onControlToModelListener = onControlToModelListener;
+	}
+
+	@Override
+	public void setOnModelToControlListener(OnModelToControlListener<T> onModelToControlListener) {
+		this.onModelToControlListener = onModelToControlListener;
+	}
+
+	@Override
+	public void setOnSelectListener(OnSelectListener<T> onSelectListener) {
+		this.onSelectListener = onSelectListener;
 
 	}
 
-	/**************************************************************************************/
-	public static enum FormState {
-		IDLE, EDITING, LOADING
+	@Override
+	public void setOnPersistListener(OnPersistListener<T> onPersistListener) {
+		this.onPersistListener = onPersistListener;
+
 	}
 
-	public void setOnControlToModelListener(OnControlToModelListener<T> controlToModelListener) {
-		this.controlToModelListener = controlToModelListener;
+	@Override
+	public void initListeners() {
+		btnSave.setOnAction(evt -> {
+			onControlToModelListener.bind(controls, selectedItem);
+			System.out.println(selectedItem);
+
+			selectedItem = onPersistListener.persist(selectedItem);
+			// tableManager.table.getSelectionModel().select(selectedItem);
+			updateControls(FormState.IDLE);
+			// btnRefresh.fire();
+		});
+
+		/**************************************************************************************/
+		btnCancel.setOnAction(evt -> {
+			selectedItem = null;
+			updateControls(FormState.IDLE);
+		});
+
+	}
+
+	@Override
+	public boolean validateListeners() {
+		return false;
 	}
 
 }

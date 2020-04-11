@@ -5,8 +5,8 @@ import java.util.Map;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import util.javafx.form.ControlType;
-import util.javafx.form.FormBuilder;
 import util.javafx.form.FormControlBuilder;
+import util.javafx.form.function.FormBuilder;
 
 public class CustomerForm implements FormBuilder {
 	@Override
