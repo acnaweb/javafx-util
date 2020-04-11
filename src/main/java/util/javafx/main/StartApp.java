@@ -13,7 +13,7 @@ public class StartApp extends AbstractApplication {
 
 	@Override
 	protected void buildScene() throws IOException {
-		ScreenManager.showMain(stage, "/util/javafx/main/MainScreen.fxml");
+		ScreenManager.showMain(stage, "Main", "/util/javafx/main/MainScreen.fxml");
 	}
 
 }

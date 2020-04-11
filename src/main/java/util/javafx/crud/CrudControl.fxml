@@ -9,25 +9,16 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root maxWidth="1358.0" prefWidth="1358.0"
-	stylesheets="@../css/bootstrapfx.css" type="VBox" VBox.vgrow="ALWAYS"
-	xmlns="http://javafx.com/javafx"
-	xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxWidth="1358.0" prefWidth="1358.0" stylesheets="@../css/bootstrapfx.css" type="VBox" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-		<VBox maxHeight="1.7976931348623157E308"
-			maxWidth="1.7976931348623157E308" minHeight="-Infinity"
-			minWidth="-Infinity" styleClass="panel">
+		<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" styleClass="panel">
 			<children>
-				<HBox alignment="BOTTOM_RIGHT"
-					maxHeight="1.7976931348623157E308"
-					maxWidth="1.7976931348623157E308" minHeight="-Infinity"
-					minWidth="-Infinity" prefHeight="40.0" spacing="10.0"
-					VBox.vgrow="ALWAYS">
+				<HBox alignment="BOTTOM_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" spacing="10.0" VBox.vgrow="ALWAYS">
 					<children>
-						<Button fx:id="btnRefresh" contentDisplay="TOP"
-							defaultButton="true" mnemonicParsing="false" text="Atualizar">
+						<Button fx:id="btnRefresh" contentDisplay="TOP" defaultButton="true" mnemonicParsing="false" text="Atualizar">
 							<styleClass>
 								<String fx:value="btn" />
 								<String fx:value="btn-sm" />
@@ -41,62 +32,69 @@
 				</HBox>
 			</children>
 		</VBox>
-		<VBox maxHeight="-Infinity" prefHeight="250.0"
-			VBox.vgrow="ALWAYS">
+		<VBox maxHeight="-Infinity" prefHeight="250.0" VBox.vgrow="ALWAYS">
 			<children>
 				<TableView fx:id="table" VBox.vgrow="ALWAYS" />
 			</children>
 		</VBox>
 		<VBox VBox.vgrow="ALWAYS">
 			<children>
-				<ToolBar prefHeight="40.0">
-					<items>
-						<Button fx:id="btnNew" mnemonicParsing="false" text="+">
-							<styleClass>
-								<String fx:value="btn" />
-								<String fx:value="btn-success" />
-								<String fx:value="btn-sm" />
-							</styleClass>
-						</Button>
-						<Button fx:id="btnSave" mnemonicParsing="false"
-							text="Salvar">
-							<styleClass>
-								<String fx:value="btn" />
-								<String fx:value="btn-primary" />
-								<String fx:value="btn-sm" />
-							</styleClass>
-						</Button>
-						<Button fx:id="btnRemove" mnemonicParsing="false"
-							text="Excluir">
-							<styleClass>
-								<String fx:value="btn" />
-								<String fx:value="btn-sm" />
-								<String fx:value="btn-danger" />
-							</styleClass>
-						</Button>
-						<Button fx:id="btnCancel" cancelButton="true"
-							mnemonicParsing="false" text="Cancel">
-							<styleClass>
-								<String fx:value="btn" />
-								<String fx:value="btn-default" />
-								<String fx:value="btn-sm" />
-							</styleClass>
-						</Button>
-					</items>
-				</ToolBar>
-				<ScrollPane fitToWidth="true" minHeight="300.0"
-					VBox.vgrow="ALWAYS">
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+      				<ToolBar prefHeight="41.0" prefWidth="794.0">
+      					<items>
+      						<Button fx:id="btnNew" mnemonicParsing="false" text="+">
+      							<styleClass>
+      								<String fx:value="btn" />
+      								<String fx:value="btn-success" />
+      								<String fx:value="btn-sm" />
+      							</styleClass>
+      						</Button>
+      						<Button fx:id="btnSave" mnemonicParsing="false" text="Salvar">
+      							<styleClass>
+      								<String fx:value="btn" />
+      								<String fx:value="btn-primary" />
+      								<String fx:value="btn-sm" />
+      							</styleClass>
+      						</Button>
+      						<Button fx:id="btnCancel" cancelButton="true" mnemonicParsing="false" text="Cancel">
+      							<styleClass>
+      								<String fx:value="btn" />
+      								<String fx:value="btn-default" />
+      								<String fx:value="btn-sm" />
+      							</styleClass>
+      						</Button>
+      					</items>
+      				</ToolBar>
+                  <ToolBar prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+                    <items>
+      						<Button fx:id="btnRemove" mnemonicParsing="false" text="Excluir">
+      							<styleClass>
+      								<String fx:value="btn" />
+      								<String fx:value="btn-sm" />
+      								<String fx:value="btn-danger" />
+      							</styleClass>
+      						</Button>
+                    </items>
+                  </ToolBar>
+                  <ToolBar fx:id="toolbarAction" prefHeight="41.0" prefWidth="867.0" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+				<ScrollPane fitToWidth="true" minHeight="300.0" VBox.vgrow="ALWAYS">
 					<content>
-						<GridPane fx:id="gridControls" hgap="5.0"
-							styleClass="panel" vgap="5.0">
+						<GridPane fx:id="gridControls" hgap="5.0" styleClass="panel" vgap="5.0">
 							<columnConstraints>
-								<ColumnConstraints halignment="RIGHT"
-									hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0"
-									prefWidth="100.0" />
-								<ColumnConstraints hgrow="SOMETIMES"
-									minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
-								<ColumnConstraints hgrow="SOMETIMES"
-									minWidth="10.0" percentWidth="40.0" prefWidth="100.0" />
+								<ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0" prefWidth="100.0" />
+								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="40.0" prefWidth="100.0" />
 							</columnConstraints>
 						</GridPane>
 					</content>

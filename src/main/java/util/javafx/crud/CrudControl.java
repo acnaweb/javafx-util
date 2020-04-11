@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import javafx.collections.FXCollections;
@@ -27,6 +28,7 @@ import util.javafx.function.OnPersistListener;
 import util.javafx.function.OnRefreshListener;
 import util.javafx.function.OnSelectListener;
 import util.javafx.function.TableBuilder;
+import util.javafx.util.DialogUtils;
 import util.javafx.util.FormUtils;
 
 public class CrudControl<T extends EntityBase> extends VBox implements OnLoadListener<T>, OnSelectListener<T> {
@@ -39,6 +41,7 @@ public class CrudControl<T extends EntityBase> extends VBox implements OnLoadLis
 	private TableView<T> table;
 	private T selectedItem;
 	private Supplier<T> supplier;
+	private Predicate<T> validator;
 
 	@FXML
 	private Button btnNew;
@@ -94,7 +97,13 @@ public class CrudControl<T extends EntityBase> extends VBox implements OnLoadLis
 		/**********************************************************/
 		btnNew.setOnAction(evt -> {
 			selectedItem = supplier.get();
-			updateControls(FormState.EDITING);
+			updateControls(FormState.NEW);
+		});
+
+		/**********************************************************/
+		btnCancel.setOnAction(evt -> {
+			selectedItem = null;
+			updateControls(FormState.IDLE);
 		});
 
 		/**********************************************************/
@@ -103,7 +112,10 @@ public class CrudControl<T extends EntityBase> extends VBox implements OnLoadLis
 			if (selectedItem != null) {
 				selectedItem.deleteEntity();
 				onPersistListener.persist(selectedItem);
+				selectedItem = null;
 				btnRefresh.fire();
+			} else {
+				DialogUtils.showAlertError("Item não selecionado");
 			}
 		});
 
@@ -118,7 +130,6 @@ public class CrudControl<T extends EntityBase> extends VBox implements OnLoadLis
 						@Override
 						protected Void call() throws Exception {
 							updateControls(FormState.LOADING);
-							selectedItem = null;
 							onRefreshListener.refresh();
 							updateControls(FormState.IDLE);
 							return null;
@@ -141,10 +152,13 @@ public class CrudControl<T extends EntityBase> extends VBox implements OnLoadLis
 		/**********************************************************/
 		btnSave.setOnAction(evt -> {
 			updateControls(FormState.PERSISTING);
-			onControlToModelListener.bind(controls, selectedItem);
-			selectedItem = onPersistListener.persist(selectedItem);
-			// updateControls(FormState.IDLE);
-			// onRefreshListener.refresh();
+			if (selectedItem != null && validator.test(selectedItem)) {
+				onControlToModelListener.bind(controls, selectedItem);
+				selectedItem = onPersistListener.persist(selectedItem);
+				btnRefresh.fire();
+			} else {
+				DialogUtils.showAlertError("Item não selecionado ou incompleto");
+			}
 		});
 
 		/**************************************************************************************/
@@ -212,6 +226,10 @@ public class CrudControl<T extends EntityBase> extends VBox implements OnLoadLis
 
 	}
 
+	public void setValidator(Predicate<T> validator) {
+		this.validator = validator;
+	}
+
 	public void setSupplier(Supplier<T> supplier) {
 		this.supplier = supplier;
 	}
@@ -248,9 +266,22 @@ public class CrudControl<T extends EntityBase> extends VBox implements OnLoadLis
 			btnCancel.setDisable(false);
 			FormUtils.disableControls(controls, true);
 			break;
-		default:
+
+		case NEW:
+			btnNew.setDisable(true);
+			btnSave.setDisable(false);
+			btnRemove.setDisable(true);
+			btnCancel.setDisable(false);
+			FormUtils.disableControls(controls, false);
 			break;
+
 		}
+
+		btnNew.setVisible(!btnNew.isDisabled());
+		btnSave.setVisible(!btnSave.isDisabled());
+		btnRemove.setVisible(!btnRemove.isDisabled());
+		btnCancel.setVisible(!btnCancel.isDisabled());
+
 	}
 
 	public boolean validateListeners() {

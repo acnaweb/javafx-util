@@ -12,6 +12,7 @@ import util.javafx.crud.CustomerCrud;
 import util.javafx.customer.Customer;
 import util.javafx.customer.CustomerRepository;
 import util.javafx.customer.CustomerSupplier;
+import util.javafx.customer.CustomerValidator;
 import util.javafx.function.OnPersistListener;
 import util.javafx.function.OnRefreshListener;
 import util.javafx.util.DialogUtils;
@@ -56,6 +57,7 @@ public class MainController implements Initializable, OnRefreshListener, OnPersi
 		customerControl.setOnPersistListener(this);
 		customerControl.setOnControlToModelListener(CustomerCrud.getOnControlToModelListener());
 		customerControl.setSupplier(new CustomerSupplier());
+		customerControl.setValidator(new CustomerValidator());
 
 		mainContent.getChildren().add(customerControl);
 
