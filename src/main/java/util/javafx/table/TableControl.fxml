@@ -7,8 +7,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root maxHeight="200.0" minHeight="200.0" prefHeight="200.0"
-	type="VBox" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx"
+<fx:root type="VBox" VBox.vgrow="ALWAYS" maxHeight="400"
+	maxWidth="1358.0" xmlns="http://javafx.com/javafx"
 	xmlns:fx="http://javafx.com/fxml/1">
 	<children>
 		<VBox maxHeight="1.7976931348623157E308"
@@ -37,10 +37,9 @@
 				</HBox>
 			</children>
 		</VBox>
-		<VBox prefHeight="266.0" prefWidth="1360.0" VBox.vgrow="ALWAYS">
+		<VBox VBox.vgrow="ALWAYS">
 			<children>
-				<TableView fx:id="table" prefHeight="264.0"
-					prefWidth="1358.0" VBox.vgrow="ALWAYS" />
+				<TableView fx:id="table" VBox.vgrow="ALWAYS" />
 			</children>
 		</VBox>
 	</children>

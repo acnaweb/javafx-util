@@ -9,6 +9,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
+import util.javafx.listener.OnRefreshListener;
+import util.javafx.listener.OnSelectListener;
 
 public class TableControl<T> extends VBox {
 	private static final String FXML = "TableControl.fxml";
@@ -40,14 +42,16 @@ public class TableControl<T> extends VBox {
 		table.getItems().addAll(FXCollections.observableArrayList(data));
 	}
 
-	public void init(SelectListener selectListener, RefreshListener refreshListener) {
+	public void setOnSelectListener(OnSelectListener selectListener) {
 		table.setOnMouseClicked(evt -> {
 			T item = table.getSelectionModel().getSelectedItem();
 			selectListener.notify(item);
 		});
+	}
 
+	public void setOnRefreshListener(OnRefreshListener refreshListener) {
 		btnRefresh.setOnAction(evt -> {
-			refreshListener.refresh();
+			refreshListener.loadData();
 		});
 	}
 

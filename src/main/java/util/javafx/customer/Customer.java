@@ -1,4 +1,4 @@
-package util.javafx.model;
+package util.javafx.customer;
 
 public class Customer {
 	private int id;
@@ -12,7 +12,6 @@ public class Customer {
 		this.id = id;
 	}
 
-	
 	public String getName() {
 		return name;
 	}
@@ -43,7 +42,15 @@ public class Customer {
 		return true;
 	}
 
-	public void t() {
-
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Customer [id=");
+		builder.append(id);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append("]");
+		return builder.toString();
 	}
+
 }

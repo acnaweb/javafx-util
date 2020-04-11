@@ -8,30 +8,11 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="500.0" prefWidth="1360.0"
+<fx:root type="VBox" maxWidth="1358.0"
 	stylesheets="@../css/bootstrapfx.css" VBox.vgrow="ALWAYS"
-	xmlns="http://javafx.com/javafx"
-	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="net.footstats.javafx.form.FormController">
+	xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-		<ScrollPane fitToWidth="true" prefHeight="200.0"
-			prefWidth="200.0" VBox.vgrow="ALWAYS">
-			<content>
-				<GridPane fx:id="gridControls" hgap="5.0"
-					styleClass="panel-body" vgap="5.0">
-					<columnConstraints>
-						<ColumnConstraints halignment="RIGHT"
-							hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0"
-							prefWidth="100.0" />
-						<ColumnConstraints hgrow="SOMETIMES"
-							minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
-						<ColumnConstraints hgrow="SOMETIMES"
-							minWidth="10.0" percentWidth="40.0" prefWidth="100.0" />
-					</columnConstraints>
-				</GridPane>
-			</content>
-		</ScrollPane>
-		<ToolBar prefHeight="40.0" prefWidth="200.0">
+		<ToolBar prefHeight="40.0">
 			<items>
 				<Button fx:id="btnNew" mnemonicParsing="false" text="+">
 					<styleClass>
@@ -65,5 +46,23 @@
 				</Button>
 			</items>
 		</ToolBar>
+		<ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+			<content>
+				<GridPane fx:id="gridControls" hgap="5.0"
+					styleClass="panel" vgap="5.0">
+					<columnConstraints>
+						<ColumnConstraints halignment="RIGHT"
+							hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0"
+							prefWidth="100.0" />
+						<ColumnConstraints hgrow="SOMETIMES"
+							minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+						<ColumnConstraints hgrow="SOMETIMES"
+							minWidth="10.0" percentWidth="40.0" prefWidth="100.0" />
+					</columnConstraints>
+				</GridPane>
+			</content>
+		</ScrollPane>
+
 	</children>
-</VBox>
+</fx:root>
+

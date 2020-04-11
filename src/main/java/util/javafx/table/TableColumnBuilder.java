@@ -6,12 +6,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import util.javafx.form.ControlType;
 
 public class TableColumnBuilder {
 
-	public static <T, V> TableColumn<T, V> build(TableView<T> table, String header, String attribute, int percentWidth,
-			CellType cellType) {
-		Objects.requireNonNull(cellType);
+	public static <T, V> void build(TableView<T> table, String header, String attribute, int percentWidth,
+			ControlType controlType) {
+		Objects.requireNonNull(controlType);
 
 		// Create column
 		TableColumn<T, V> col = new TableColumn<T, V>(header);
@@ -20,8 +21,8 @@ public class TableColumnBuilder {
 
 		col.setCellValueFactory(new PropertyValueFactory<T, V>(attribute));
 
-		if (cellType != null) {
-			switch (cellType) {
+		if (controlType != null) {
+			switch (controlType) {
 			case CHECKBOX:
 				col.setCellFactory(tc -> new CheckBoxTableCell<>());
 				break;
@@ -43,10 +44,6 @@ public class TableColumnBuilder {
 
 		table.getColumns().add(col);
 
-		return col;
 	}
 
-	public static enum CellType {
-		TEXTFIELD, CHECKBOX, CHOICEBOX, ENUM, PROGRESSBAR, IMAGE, INTEGER
-	}
 }

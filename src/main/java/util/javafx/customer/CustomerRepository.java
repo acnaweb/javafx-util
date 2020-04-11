@@ -1,9 +1,9 @@
-package util.javafx.model;
+package util.javafx.customer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Database {
+public class CustomerRepository {
 	public static List<Customer> list() {
 		List<Customer> result = new ArrayList<Customer>();
 		Customer customer = new Customer ();

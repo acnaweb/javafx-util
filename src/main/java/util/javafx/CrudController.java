@@ -12,160 +12,20 @@ public class CrudController<T> implements Initializable, Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
-		
+
 	}
-//	private int gridRow = 0;
+
+
 //
-//	private Button btnNew;
-//	private Button btnRefresh;
-//	private Button btnSave;
-//	private Button btnCancel;
-//	private Button btnRemove;
+//	
 //
-//	private Label status;
-//
-//	private GridPane gridControls;
-//	private Map<String, Node> controls = new HashMap<String, Node>();
-//
-//	protected Stage stage;
-//	protected Scene scene;
-//	protected Node contentCrud;
-//
-//	protected AbstractTableManager<T> tableManager;
-//	protected T selectedItem;
-//
-//	protected CustomJpaRepository<T, ?> service;
-//
-//	protected abstract T newInstanceItem();
-//
-//	protected abstract void createTableManager();
-//
-//	protected abstract void initListeners();
-//
-//	protected abstract void createControls();
-//
-//	protected abstract void bindModelToControl();
-//
-//	protected abstract void bindControlToModel();
-//
-//	@SuppressWarnings("rawtypes")
-//	protected <V, E extends Enum<E>> void addControl(String header, String attribute, int percentWidth,
-//			CellType cellType, boolean showInTable, boolean showInForm, Class<E> enumData) {
-//
-//		Label label = new Label(header);
-//		label.getStyleClass().add("lbl");
-//		label.getStyleClass().add("lbl-default");
-//
-//		controls.put(attribute + "_0", label);
-//
-//		Node input = null;
-//
-//		switch (cellType) {
-//		case ENUM:
-//			ObservableList<String> items = FXCollections.observableArrayList();
-//			for (Enum item : enumData.getEnumConstants()) {
-//				items.add(item.name());
-//			}
-//			input = new ComboBox<>(items);
-//			break;
-//		case CHECKBOX:
-//			input = new CheckBox();
-//			break;
-//		case INTEGER:
-//			input = new Spinner<Integer>(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE));
-//
-//			break;
-//		case CHOICEBOX:
-//
-//		case IMAGE:
-//		case PROGRESSBAR:
-//		case TEXTFIELD:
-//			input = new TextField();
-//			break;
-//		}
-//		if (showInForm == true) {
-//			gridControls.add(label, 0, gridRow);
-//			gridControls.add(input, 1, gridRow);
-//		}
-//
-//		if (showInTable) {
-//			tableManager.<V>createColumn(header, attribute, percentWidth, cellType);
-//		}
-//
-//		controls.put(attribute, input);
-//
-//		gridRow++;
-//
-//	}
-//
-//	@SuppressWarnings("unchecked")
-//	protected Object getValueFromControl(String attribute) {
-//		if (controls.containsKey(attribute) && controls.get(attribute) != null) {
-//			if (controls.get(attribute) instanceof TextInputControl) {
-//				return ((TextInputControl) controls.get(attribute)).getText();
-//			} else if (controls.get(attribute) instanceof CheckBox) {
-//				return ((CheckBox) controls.get(attribute)).isSelected();
-//			} else if (controls.get(attribute) instanceof Spinner) {
-//				return ((Spinner<Integer>) controls.get(attribute)).getValue();
-//			} else if (controls.get(attribute) instanceof ComboBox) {
-//				return ((ComboBox<String>) controls.get(attribute)).getValue();
-//			}
-//		}
-//		return null;
-//
-//	}
-//
-//	@SuppressWarnings("unchecked")
-//	protected void setValueToControl(String attribute, Object value) {
-//		try {
-//			if (controls.containsKey(attribute) && value != null && controls.get(attribute) != null) {
-//				if (controls.get(attribute) instanceof TextInputControl) {
-//					((TextInputControl) controls.get(attribute)).setText(value.toString());
-//				} else if (controls.get(attribute) instanceof CheckBox) {
-//					((CheckBox) controls.get(attribute)).setSelected((boolean) value);
-//				} else if (controls.get(attribute) instanceof Spinner) {
-//					((Spinner<Integer>) controls.get(attribute)).getValueFactory().setValue((Integer) value);
-//				} else if (controls.get(attribute) instanceof ComboBox) {
-//					((ComboBox<String>) controls.get(attribute)).setValue(value.toString());
-//				}
-//			}
-//		} catch (Exception e) {
-//			System.out.println(e.getMessage() + " " + attribute + "=" + value);
-//		}
-//
-//	}
-//
-//	@SuppressWarnings("unchecked")
-//	protected final void clearControls() {
-//		controls.entrySet().stream().forEach(entry -> {
-//			if (entry.getValue() instanceof TextInputControl) {
-//				((TextInputControl) entry.getValue()).clear();
-//			} else if (entry.getValue() instanceof CheckBox) {
-//				((CheckBox) entry.getValue()).setSelected(false);
-//			} else if (entry.getValue() instanceof Spinner) {
-//				try {
-//					((Spinner<Integer>) entry.getValue()).getValueFactory().setValue(0);
-//				} catch (Exception e) {
-//				}
-//			} else if (entry.getValue() instanceof ComboBox) {
-//				((ComboBox<String>) entry.getValue()).setValue(null);
-//			}
-//		});
-//	}
-//
-//	protected final void disableControls(boolean status) {
-//		controls.entrySet().stream().forEach(entry -> {
-//			if (entry.getValue() instanceof Node) {
-//				((Node) entry.getValue()).setDisable(status);
-//			}
-//		});
-//	}
+
 //
 //	@SuppressWarnings("unchecked")
 //	@Override
@@ -189,81 +49,10 @@ public class CrudController<T> implements Initializable, Observer {
 //
 //	}
 //
-//	protected void showAlert(String msg) {
-//		Alert alert = new Alert(AlertType.INFORMATION);
-//		alert.setTitle("Titulo");
-//		alert.setHeaderText("Cabeçalho");
-//		alert.setContentText(msg);
-//		alert.showAndWait();
-//	}
 //
-//	protected void showAlertError(String msg) {
-//		Alert alert = new Alert(AlertType.ERROR);
-//		alert.setTitle("Titulo");
-//		alert.setHeaderText("Cabeçalho");
-//		alert.setContentText(msg);
-//		alert.showAndWait().ifPresent(rs -> {
-//			if (rs == ButtonType.OK) {
-//				System.out.println("Pressed OK.");
-//			}
-//		});
-//	}
+//	
 //
-//	protected void updateControls(FormState formState) {
-//		clearControls();
 //
-//		switch (formState) {
-//		case IDLE:
-//			btnRefresh.setDisable(false);
-//			btnNew.setDisable(false);
-//			btnSave.setDisable(true);
-//			btnRemove.setDisable(true);
-//			btnCancel.setDisable(true);
-//			disableControls(true);
-//			break;
-//		case LOADING:
-//			btnRefresh.setDisable(true);
-//			btnNew.setDisable(true);
-//			btnSave.setDisable(true);
-//			btnRemove.setDisable(true);
-//			btnCancel.setDisable(true);
-//			disableControls(true);
-//			break;
-//		case EDITING:
-//			btnRefresh.setDisable(false);
-//			btnNew.setDisable(false);
-//			btnSave.setDisable(false);
-//			btnRemove.setDisable(false);
-//			btnCancel.setDisable(false);
-//			disableControls(false);
-//			break;
-//		}
-//
-//	}
-//
-//	public Node getContentCrud() {
-//		return contentCrud;
-//	}
-//
-//	protected void setContentCrud(Node contentCrud) {
-//		this.contentCrud = contentCrud;
-//	}
-//
-//	public void setStage(Stage stage) {
-//		this.stage = stage;
-//	}
-//
-//	public void setScene(Scene scene) {
-//		this.scene = scene;
-//	}
-//
-//	public void setService(CustomJpaRepository<T, ?> service) {
-//		this.service = service;
-//	}
-//
-//	public void setGridControls(GridPane gridControls) {
-//		this.gridControls = gridControls;
-//	}
 //
 //	public void setStatus(Label label) {
 //		this.status = label;
@@ -340,35 +129,8 @@ public class CrudController<T> implements Initializable, Observer {
 //		});
 //	}
 //
-//	protected void setSaveAction(Button btn) {
-//		btnSave = btn;
-//		btnSave.setOnAction(evt -> {
-//			bindControlToModel();
-//			selectedItem = service.save(selectedItem);
-//			// tableManager.table.getSelectionModel().select(selectedItem);
-//			updateControls(FormState.IDLE);
-//			btnRefresh.fire();
-//		});
-//	}
+
+
 //
-//	protected void setCancelAction(Button btn) {
-//		btnCancel = btn;
-//		btnCancel.setOnAction(evt -> {
-//			selectedItem = null;
-//			updateControls(FormState.IDLE);
-//		});
-//	}
-//
-//	public Stage getStage() {
-//		return stage;
-//	}
-//
-//	public Scene getScene() {
-//		return scene;
-//	}
-//
-//	public enum FormState {
-//		IDLE, EDITING, LOADING
-//	}
 
 }

@@ -6,7 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import util.javafx.demo.DemoApp;
+import util.javafx.main.StartApp;
 
 public final class ScreenManager {
 	private static Stage stage;
@@ -16,7 +16,7 @@ public final class ScreenManager {
 		ScreenManager.stage = stage;
 
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(DemoApp.class.getResource(fxml));
+		loader.setLocation(StartApp.class.getResource(fxml));
 		main = loader.load();
 
 		Scene scene = new Scene(main);
