@@ -16,8 +16,8 @@ import javafx.scene.layout.GridPane;
 public class ControlBuilder {
 
 	@SuppressWarnings("rawtypes")
-	public static <V, E extends Enum<E>> void build(GridPane gridControls, Map<String, Node> controls, String header,
-			String attribute, int percentWidth, ControlType controlType, Class<E> enumData) {
+	public static <V> void build(GridPane gridControls, Map<String, Node> controls, String header,
+			String attribute, int percentWidth, ControlType controlType, Class enumData) {
 
 		Label label = new Label(header);
 		label.getStyleClass().add("lbl");
@@ -30,9 +30,10 @@ public class ControlBuilder {
 		switch (controlType) {
 		case ENUM:
 			ObservableList<String> items = FXCollections.observableArrayList();
-			for (Enum item : enumData.getEnumConstants()) {
-				items.add(item.name());
-			}
+			
+//			for (Enum item : enumData.getEnumConstants()) {
+//				items.add(item.name());
+//			}
 			input = new ComboBox<>(items);
 			break;
 		case CHECKBOX:

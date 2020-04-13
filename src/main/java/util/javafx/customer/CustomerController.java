@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.VBox;
+import util.javafx.crud.AllBuilder;
 import util.javafx.crud.CrudControl;
 import util.javafx.function.OnPersistListener;
 import util.javafx.function.OnRefreshListener;
@@ -28,8 +29,8 @@ public class CustomerController implements Initializable, OnRefreshListener, OnP
 		mainContent.getChildren().clear();
 		mainContent.getChildren().add(control);
 
-		control.createTable(CustomerCrud.tableBuilder);
-		control.createForm(CustomerCrud.formBuilder);
+		control.createTable(CustomerCrud.columns, CustomerCrud.tableBuilder);
+		control.createForm(CustomerCrud.columns, AllBuilder.formBuilder);
 		control.setOnModelToControlListener(CustomerCrud.onModelToControlListener);
 		control.setOnRefreshListener(this);
 		control.setOnPersistListener(this);

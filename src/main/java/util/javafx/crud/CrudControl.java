@@ -129,7 +129,7 @@ public class CrudControl<T extends EntityBase> extends VBox implements OnLoadLis
 						@Override
 						protected Void call() throws Exception {
 							updateControls(FormState.LOADING);
-							
+
 							onRefreshListener.refresh();
 //							updateControls(FormState.IDLE);
 							return null;
@@ -168,12 +168,12 @@ public class CrudControl<T extends EntityBase> extends VBox implements OnLoadLis
 		});
 	}
 
-	public void createTable(TableBuilder<T> builder) {
-		builder.build(table);
+	public void createTable(List<Column> columns, TableBuilder<T> builder) {
+		builder.build(columns, table);
 	}
 
-	public void createForm(FormBuilder builder) {
-		builder.build(gridControls, controls);
+	public void createForm(List<Column> columns, FormBuilder builder) {
+		builder.build(columns, gridControls, controls);
 	}
 
 	public void populate(List<T> data) {
