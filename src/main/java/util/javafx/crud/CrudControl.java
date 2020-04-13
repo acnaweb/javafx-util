@@ -18,8 +18,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import util.javafx.DialogUtils;
 import util.javafx.EntityBase;
-import util.javafx.form.FormState;
+import util.javafx.FormUtils;
 import util.javafx.function.FormBuilder;
 import util.javafx.function.OnControlToModelListener;
 import util.javafx.function.OnLoadListener;
@@ -28,8 +29,6 @@ import util.javafx.function.OnPersistListener;
 import util.javafx.function.OnRefreshListener;
 import util.javafx.function.OnSelectListener;
 import util.javafx.function.TableBuilder;
-import util.javafx.util.DialogUtils;
-import util.javafx.util.FormUtils;
 
 public class CrudControl<T extends EntityBase> extends VBox implements OnLoadListener<T>, OnSelectListener<T> {
 	private static final String FXML = "CrudControl.fxml";
@@ -130,8 +129,9 @@ public class CrudControl<T extends EntityBase> extends VBox implements OnLoadLis
 						@Override
 						protected Void call() throws Exception {
 							updateControls(FormState.LOADING);
+							
 							onRefreshListener.refresh();
-							updateControls(FormState.IDLE);
+//							updateControls(FormState.IDLE);
 							return null;
 						}
 					};

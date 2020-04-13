@@ -1,4 +1,4 @@
-package util.javafx.customer;
+package util.javafx.model;
 
 import util.javafx.EntityBase;
 

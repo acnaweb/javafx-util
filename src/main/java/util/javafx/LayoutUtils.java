@@ -1,4 +1,4 @@
-package util.javafx.util;
+package util.javafx;
 
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressIndicator;

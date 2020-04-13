@@ -5,18 +5,19 @@ import java.util.Map;
 import javafx.scene.Node;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
-import util.javafx.form.ControlBuilder;
-import util.javafx.form.ControlType;
+import util.javafx.FormUtils;
+import util.javafx.crud.ControlBuilder;
+import util.javafx.crud.ControlType;
 import util.javafx.function.FormBuilder;
 import util.javafx.function.OnControlToModelListener;
 import util.javafx.function.OnModelToControlListener;
 import util.javafx.function.TableBuilder;
 import util.javafx.function.TableColumnBuilder;
-import util.javafx.util.FormUtils;
+import util.javafx.model.Customer;
 
 public final class CustomerCrud {
 
-	private static FormBuilder formBuilder = new FormBuilder() {
+	public static FormBuilder formBuilder = new FormBuilder() {
 		@Override
 		public void build(GridPane gridControls, Map<String, Node> controls) {
 			ControlBuilder.build(gridControls, controls, "ID", "id", 75, ControlType.INTEGER, null);
@@ -24,7 +25,7 @@ public final class CustomerCrud {
 		}
 	};
 
-	private static OnControlToModelListener<Customer> onControlToModelListener = new OnControlToModelListener<Customer>() {
+	public static OnControlToModelListener<Customer> onControlToModelListener = new OnControlToModelListener<Customer>() {
 		@Override
 		public void bind(Map<String, Node> controls, Customer data) {
 			data.setId((int) FormUtils.getValueFromControl(controls, "id"));
@@ -32,7 +33,7 @@ public final class CustomerCrud {
 		}
 	};
 
-	private static OnModelToControlListener<Customer> onModelToControlListener = new OnModelToControlListener<Customer>() {
+	public static OnModelToControlListener<Customer> onModelToControlListener = new OnModelToControlListener<Customer>() {
 		@Override
 		public void bind(Map<String, Node> controls, Customer data) {
 			FormUtils.setValueToControl(controls, "id", data.getId());
@@ -41,7 +42,7 @@ public final class CustomerCrud {
 
 	};
 
-	private static TableBuilder<Customer> tableBuilder = new TableBuilder<Customer>() {
+	public static TableBuilder<Customer> tableBuilder = new TableBuilder<Customer>() {
 		@Override
 		public void build(TableView<Customer> table) {
 			table.setEditable(false);
@@ -49,21 +50,5 @@ public final class CustomerCrud {
 			TableColumnBuilder.<Customer, Integer>build(table, "Nome", "name", 200, ControlType.TEXTFIELD);
 		}
 	};
-
-	public static FormBuilder getFormBuilder() {
-		return formBuilder;
-	}
-
-	public static OnControlToModelListener<Customer> getOnControlToModelListener() {
-		return onControlToModelListener;
-	}
-
-	public static OnModelToControlListener<Customer> getOnModelToControlListener() {
-		return onModelToControlListener;
-	}
-
-	public static TableBuilder<Customer> getTableBuilder() {
-		return tableBuilder;
-	}
 
 }

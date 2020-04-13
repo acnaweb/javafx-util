@@ -6,7 +6,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import util.javafx.form.ControlType;
+import util.javafx.crud.ControlType;
 
 public class TableColumnBuilder {
 

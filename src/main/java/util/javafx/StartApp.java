@@ -1,9 +1,6 @@
-package util.javafx.main;
+package util.javafx;
 
 import java.io.IOException;
-
-import util.javafx.AbstractApplication;
-import util.javafx.ScreenManager;
 
 public class StartApp extends AbstractApplication {
 

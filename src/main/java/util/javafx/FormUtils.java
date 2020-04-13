@@ -1,4 +1,4 @@
-package util.javafx.util;
+package util.javafx;
 
 import java.util.Map;
 

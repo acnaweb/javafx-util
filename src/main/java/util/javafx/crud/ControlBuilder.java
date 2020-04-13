@@ -1,4 +1,4 @@
-package util.javafx.form;
+package util.javafx.crud;
 
 import java.util.Map;
 
