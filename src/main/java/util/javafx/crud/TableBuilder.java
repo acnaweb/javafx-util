@@ -1,28 +1,25 @@
-package util.javafx.function;
+package util.javafx.crud;
 
-import java.util.Objects;
+import java.util.List;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import util.javafx.crud.ControlType;
 
-public class TableColumnBuilder {
+public class TableBuilder<T> {
 
-	public static <T, V> void build(TableView<T> table, String header, String attribute, int percentWidth,
-			ControlType controlType) {
-		Objects.requireNonNull(controlType);
+	private <V> void buildColumn(TableView<T> table, Column column) {
 
 		// Create column
-		TableColumn<T, V> col = new TableColumn<T, V>(header);
-		col.setMaxWidth(1f * percentWidth);
-		col.setPrefWidth(1f * percentWidth);
+		TableColumn<T, V> col = new TableColumn<T, V>(column.getHeader());
+		col.setMaxWidth(1f * column.getPercentWidth());
+		col.setPrefWidth(1f * column.getPercentWidth());
 
-		col.setCellValueFactory(new PropertyValueFactory<T, V>(attribute));
+		col.setCellValueFactory(new PropertyValueFactory<T, V>(column.getAttribute()));
 
-		if (controlType != null) {
-			switch (controlType) {
+		if (column.getControlType() != null) {
+			switch (column.getControlType()) {
 			case CHECKBOX:
 				col.setCellFactory(tc -> new CheckBoxTableCell<>());
 				break;
@@ -46,4 +43,10 @@ public class TableColumnBuilder {
 
 	}
 
+	public void build(List<Column> columns, TableView<T> table) {
+		table.setEditable(false);
+
+		columns.stream().filter(c -> Column.Scope.BOTH.equals(c.getScope()) || Column.Scope.TABLE.equals(c.getScope()))
+				.forEach(column -> buildColumn(table, column));
+	}
 }

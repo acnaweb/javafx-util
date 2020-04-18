@@ -1,8 +1,6 @@
-package util.javafx.customer;
+package app.main.customer;
 
 import java.util.function.Predicate;
-
-import util.javafx.model.Customer;
 
 public class CustomerValidator implements Predicate<Customer> {
 

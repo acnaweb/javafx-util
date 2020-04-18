@@ -1,8 +1,6 @@
-package util.javafx.customer;
+package app.main.customer;
 
 import java.util.function.Supplier;
-
-import util.javafx.model.Customer;
 
 public class CustomerSupplier implements Supplier<Customer> {
 

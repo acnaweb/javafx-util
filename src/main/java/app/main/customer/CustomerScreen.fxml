@@ -6,5 +6,5 @@
 <VBox fx:id="mainContent" alignment="TOP_CENTER" prefHeight="200.0"
 	prefWidth="488.0" xmlns="http://javafx.com/javafx"
 	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="util.javafx.customer.CustomerController">
+	fx:controller="app.main.customer.CustomerController">
 </VBox>

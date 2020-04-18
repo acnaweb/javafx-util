@@ -1,4 +1,4 @@
-package util.javafx.main;
+package app.main;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -8,7 +8,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
-import util.javafx.ScreenManager;
 
 public class MainController implements Initializable {
 

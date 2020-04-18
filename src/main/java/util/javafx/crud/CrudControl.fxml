@@ -4,6 +4,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -100,20 +101,20 @@
 										<String fx:value="btn-sm" />
 									</styleClass>
 								</Button>
+								<Separator orientation="VERTICAL" />
+                        <Button fx:id="btnForm" mnemonicParsing="false" text="Formulario">
+                           <styleClass>
+                              <String fx:value="btn" />
+                              <String fx:value="btn-default" />
+                              <String fx:value="btn-sm" />
+                           </styleClass>
+                        </Button>
 							</items>
 						</ToolBar>
 					</children>
 				</GridPane>
-				<ScrollPane fitToWidth="true" minHeight="300.0" VBox.vgrow="ALWAYS">
-					<content>
-						<GridPane fx:id="gridControls" hgap="5.0" styleClass="panel" vgap="5.0">
-							<columnConstraints>
-								<ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0" prefWidth="100.0" />
-								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
-								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="40.0" prefWidth="100.0" />
-							</columnConstraints>
-						</GridPane>
-					</content>
+				<ScrollPane fx:id="itemContent" fitToWidth="true" minHeight="300.0" VBox.vgrow="ALWAYS">
+
 				</ScrollPane>
 
 			</children>

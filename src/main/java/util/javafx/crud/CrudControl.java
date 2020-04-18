@@ -1,6 +1,7 @@
 package util.javafx.crud;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,38 +10,29 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.ToolBar;
 import javafx.scene.layout.VBox;
-import util.javafx.DialogUtils;
-import util.javafx.EntityBase;
-import util.javafx.FormUtils;
-import util.javafx.function.FormBuilder;
 import util.javafx.function.OnControlToModelListener;
 import util.javafx.function.OnLoadListener;
 import util.javafx.function.OnModelToControlListener;
 import util.javafx.function.OnPersistListener;
 import util.javafx.function.OnRefreshListener;
 import util.javafx.function.OnSelectListener;
-import util.javafx.function.TableBuilder;
 
-public class CrudControl<T extends EntityBase> extends VBox implements OnLoadListener<T>, OnSelectListener<T> {
+public class CrudControl<T> extends VBox implements OnSelectListener<T>, OnLoadListener<T> {
 	private static final String FXML = "CrudControl.fxml";
 
 	@FXML
 	private Button btnRefresh;
-
-	@FXML
-	private TableView<T> table;
-	private T selectedItem;
-	private Supplier<T> supplier;
-	private Predicate<T> validator;
 
 	@FXML
 	private Button btnNew;
@@ -55,7 +47,32 @@ public class CrudControl<T extends EntityBase> extends VBox implements OnLoadLis
 	private Button btnCancel;
 
 	@FXML
-	private GridPane gridControls;
+	private Button btnForm;
+
+	@FXML
+	private ScrollPane itemContent;
+
+	@FXML
+	private ToolBar toolbarAction;
+
+	private ObservableList<Button> customButtons = FXCollections.<Button>observableArrayList();
+
+	// @Autowired
+	private FormItemControl formItemControl = new FormItemControl();
+
+	@FXML
+	private Map<String, Node> controls = new HashMap<String, Node>();
+
+	@FXML
+	private TableView<T> table;
+	private T selectedItem;
+
+	private Supplier<T> supplier;
+	private Predicate<T> validator;
+
+	private final TableBuilder<T> tableBuilder = new TableBuilder<T>();
+
+	/*********************************************************/
 
 	private OnControlToModelListener<T> onControlToModelListener;
 
@@ -65,25 +82,33 @@ public class CrudControl<T extends EntityBase> extends VBox implements OnLoadLis
 
 	private OnPersistListener<T> onPersistListener;
 
-	private Map<String, Node> controls = new HashMap<String, Node>();
+	private List<OnSelectListener<T>> onSelectListeners;
 
-	public CrudControl() {
+	/*********************************************************/
+	public CrudControl(Supplier<T> supplier, Predicate<T> validator) {
+
+		this.supplier = supplier;
+		this.validator = validator;
+
+		Objects.requireNonNull(supplier, "supplier is null");
+		Objects.requireNonNull(validator, "validator is null");
+
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
 
 		try {
 			fxmlLoader.load();
-			init();
 
 		} catch (IOException exception) {
 			throw new RuntimeException(exception);
 		}
 	}
 
-	private void init() {
+	public void init(final Map<String, Object> params) {
 		updateControls(FormState.SETTING_UP);
 		initListeners();
+		validate();
 		updateControls(FormState.IDLE);
 	}
 
@@ -109,8 +134,7 @@ public class CrudControl<T extends EntityBase> extends VBox implements OnLoadLis
 		btnRemove.setOnAction(evt -> {
 			updateControls(FormState.PERSISTING);
 			if (selectedItem != null) {
-				selectedItem.deleteEntity();
-				onPersistListener.persist(selectedItem);
+				onPersistListener.delete(selectedItem);
 				selectedItem = null;
 				btnRefresh.fire();
 			} else {
@@ -131,7 +155,6 @@ public class CrudControl<T extends EntityBase> extends VBox implements OnLoadLis
 							updateControls(FormState.LOADING);
 
 							onRefreshListener.refresh();
-//							updateControls(FormState.IDLE);
 							return null;
 						}
 					};
@@ -166,74 +189,61 @@ public class CrudControl<T extends EntityBase> extends VBox implements OnLoadLis
 			selectedItem = null;
 			updateControls(FormState.IDLE);
 		});
+
+		/**************************************************************************************/
+		btnForm.setOnAction(evt -> {
+			setContent(formItemControl);
+		});
 	}
 
-	public void createTable(List<Column> columns, TableBuilder<T> builder) {
-		builder.build(columns, table);
+	public void createTable(List<Column> columns) {
+		tableBuilder.build(columns, table);
 	}
 
-	public void createForm(List<Column> columns, FormBuilder builder) {
-		builder.build(columns, gridControls, controls);
+	public void createForm(List<Column> columns) {
+		btnForm.setVisible(false);
+		FormUtils.build(columns, formItemControl, controls);
+		setContent(formItemControl);
 	}
 
-	public void populate(List<T> data) {
-		load(data);
-	}
+	private void validate() {
+		Objects.requireNonNull(onControlToModelListener, "onControlToModelListener is null");
+		Objects.requireNonNull(onModelToControlListener, "onModelToControlListener is null");
+		Objects.requireNonNull(onPersistListener, "onPersistListener null");
+		Objects.requireNonNull(onRefreshListener, "onRefreshListener null");
 
-	@Override
-	public void load(List<T> data) {
-		updateControls(FormState.LOADING);
-		table.getItems().clear();
-		table.getItems().addAll(FXCollections.observableArrayList(data));
-		updateControls(FormState.IDLE);
-	}
-
-	@Override
-	public void notify(T data) {
-		if (data != null) {
-			selectedItem = data;
-			System.out.println(data);
-			updateControls(FormState.EDITING);
-			onModelToControlListener.bind(controls, selectedItem);
-			FormUtils.disableControls(controls, false);
-		} else {
-			selectedItem = null;
+		if (table.getColumns().size() == 0) {
+			throw new IllegalArgumentException("tabela não inicializada");
 		}
+
+		if (controls.size() == 0) {
+			throw new IllegalArgumentException("forma não inicializado");
+		}
+
 	}
 
-	public void addItem(T item) {
-		table.getItems().add(item);
-	}
-
-	public void removeAll() {
-		table.getItems().clear();
-	}
-
-	public void setOnRefreshListener(OnRefreshListener onRefreshListener) {
-		this.onRefreshListener = onRefreshListener;
-	}
-
+	/**********************************************************************************************************/
 	public void setOnControlToModelListener(OnControlToModelListener<T> onControlToModelListener) {
 		this.onControlToModelListener = onControlToModelListener;
 	}
 
+	/**********************************************************************************************************/
 	public void setOnModelToControlListener(OnModelToControlListener<T> onModelToControlListener) {
 		this.onModelToControlListener = onModelToControlListener;
 	}
 
+	/**********************************************************************************************************/
+	public void setOnRefreshListener(OnRefreshListener onRefreshListener) {
+		this.onRefreshListener = onRefreshListener;
+	}
+
+	/**********************************************************************************************************/
 	public void setOnPersistListener(OnPersistListener<T> onPersistListener) {
 		this.onPersistListener = onPersistListener;
 
 	}
 
-	public void setValidator(Predicate<T> validator) {
-		this.validator = validator;
-	}
-
-	public void setSupplier(Supplier<T> supplier) {
-		this.supplier = supplier;
-	}
-
+	/**********************************************************************************************************/
 	public void updateControls(FormState formState) {
 		FormUtils.clearControls(controls);
 
@@ -274,23 +284,77 @@ public class CrudControl<T extends EntityBase> extends VBox implements OnLoadLis
 			btnCancel.setDisable(false);
 			FormUtils.disableControls(controls, false);
 			break;
+		case PERSISTING:
+			break;
+		default:
+			break;
 
 		}
 
-		btnNew.setVisible(!btnNew.isDisabled());
-		btnSave.setVisible(!btnSave.isDisabled());
-		btnRemove.setVisible(!btnRemove.isDisabled());
-		btnCancel.setVisible(!btnCancel.isDisabled());
+		btnForm.setDisable(btnSave.isDisable());
+		customButtons.forEach(btn -> btn.setDisable(btnSave.isDisable()));
 
 	}
 
-	public boolean validateListeners() {
-		Objects.requireNonNull(onRefreshListener, "onRefreshListener null");
-		Objects.requireNonNull(onControlToModelListener, "onControlToModelListener null");
-		Objects.requireNonNull(onModelToControlListener, "onModelToControlListener null");
-		Objects.requireNonNull(onPersistListener, "onPersistListener null");
+	/**********************************************************************************************************/
+	public T getSelectedItem() {
+		return selectedItem;
+	}
 
-		return true;
+	public void setContent(Node content) {
+		this.itemContent.setContent(content);
+
+		if (!(content instanceof FormItemControl)) {
+			btnNew.setDisable(true);
+			btnSave.setDisable(true);
+			btnRemove.setDisable(true);
+			btnCancel.setDisable(true);
+		}
+
+	}
+
+	public void addButton(Button button) {
+		button.getStyleClass().add("btn");
+		button.getStyleClass().add("btn-default");
+		button.getStyleClass().add("btn-sm");
+		toolbarAction.getItems().add(button);
+		customButtons.add(button);
+
+		btnForm.setVisible(true);
+
+	}
+
+	/**********************************************************************************************************/
+	@Override
+	public void load(List<T> data) {
+		updateControls(FormState.LOADING);
+		table.getItems().clear();
+		table.getItems().addAll(FXCollections.observableArrayList(data));
+		updateControls(FormState.IDLE);
+	}
+
+	@Override
+	public void notify(T data) {
+
+		if (data != null) {
+			selectedItem = data;
+			System.out.println(data);
+			updateControls(FormState.EDITING);
+			onModelToControlListener.bind(controls, selectedItem);
+			FormUtils.disableControls(controls, false);
+		} else {
+			selectedItem = null;
+		}
+
+		if (onSelectListeners != null)
+			onSelectListeners.forEach(listener -> listener.notify(data));
+
+	}
+
+	public void registerOnSelectListener(OnSelectListener<T> listener) {
+		if (onSelectListeners == null)
+			onSelectListeners = new ArrayList<OnSelectListener<T>>();
+		onSelectListeners.add(listener);
 	}
 
 }

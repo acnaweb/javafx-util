@@ -1,18 +1,18 @@
-package util.javafx;
+package app.main;
 
 import java.io.IOException;
 
+import app.StartApp;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import util.javafx.main.MainController;
 
 public final class ScreenManager {
 	private static FXMLLoader loader;
-	private static Stage stage;
-	private static BorderPane main;
+	private static Stage primaryStage;
+	private static BorderPane root;
 	private static MainController mainController;
 
 	public static void setLoader(FXMLLoader loader) {
@@ -20,22 +20,22 @@ public final class ScreenManager {
 	}
 
 	public static void showMain(Stage stage, String title, String fxml) throws IOException {
-		ScreenManager.stage = stage;
+		ScreenManager.primaryStage = stage;
 
 		setLoader(new FXMLLoader());
 		loader.setLocation(StartApp.class.getResource(fxml));
-		main = loader.load();
+		root = loader.load();
 		mainController = loader.getController();
 
-		Scene scene = new Scene(main);
-		ScreenManager.stage.setTitle(title);
-		ScreenManager.stage.setScene(scene);
-		ScreenManager.stage.setMaximized(true);
-		ScreenManager.stage.show();
+		Scene scene = new Scene(root);
+		ScreenManager.primaryStage.setTitle(title);
+		ScreenManager.primaryStage.setScene(scene);
+		ScreenManager.primaryStage.setMaximized(true);
+		ScreenManager.primaryStage.show();
 	}
 
 	public static void showCustomer() {
-		final String SCREEN_CONTENT = "/util/javafx/customer/CustomerScreen.fxml";
+		final String SCREEN_CONTENT = "/app/main/customer/CustomerScreen.fxml";
 		try {
 			Parent layout;
 			FXMLLoader localLoader = new FXMLLoader();

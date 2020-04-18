@@ -1,4 +1,4 @@
-package util.javafx.model;
+package app.main.customer;
 
 import java.util.ArrayList;
 import java.util.List;
