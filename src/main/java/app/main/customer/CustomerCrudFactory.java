@@ -38,12 +38,19 @@ public class CustomerCrudFactory {
 			crud.setOnPersistListener(onPersistListener);
 			crud.createForm(columns);
 
-			Button btn = new Button("Ação 1");
-			btn.setOnAction(evt -> {
+			Button btn1 = new Button("Ação 1");
+			btn1.setOnAction(evt -> {
 				crud.setContent(null);
 				DialogUtils.showAlert("Ação 1");
 			});
-			crud.addButton(btn);
+			crud.addButton(btn1);
+			
+			Button btn2 = new Button("Ação 2");
+			btn2.setOnAction(evt -> {
+				crud.setContent(null);
+				DialogUtils.showAlert("Ação 2");
+			});
+			crud.addButton(btn2);
 
 		}
 		return crud;
