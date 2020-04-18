@@ -44,7 +44,7 @@ public class CustomerCrudFactory {
 				DialogUtils.showAlert("Ação 1");
 			});
 			crud.addButton(btn1);
-			
+
 			Button btn2 = new Button("Ação 2");
 			btn2.setOnAction(evt -> {
 				crud.setContent(null);
