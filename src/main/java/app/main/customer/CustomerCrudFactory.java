@@ -22,7 +22,7 @@ public class CustomerCrudFactory {
 	private static CrudControl<Customer> crud;
 
 	/****************************************************************************/
-	public static CrudControl<Customer> getCrudControlCustomer(OnRefreshListener onRefreshListener,
+	public static CrudControl<Customer> getCrud(OnRefreshListener onRefreshListener,
 			OnPersistListener<Customer> onPersistListener) {
 		if (crud == null) {
 			crud = new CrudControl<Customer>(new CustomerSupplier(), new CustomerValidator());

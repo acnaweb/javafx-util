@@ -16,7 +16,7 @@ public class CustomerController implements Initializable, OnRefreshListener, OnP
 	@FXML
 	private VBox mainContent;
 
-	private CrudControl<Customer> crud;
+	private CrudControl<Customer> control;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -24,10 +24,10 @@ public class CustomerController implements Initializable, OnRefreshListener, OnP
 	}
 
 	private void showCrud() {
-		crud = CustomerCrudFactory.getCrudControlCustomer(this, this);
-		crud.init(null);
+		control = CustomerCrudFactory.getCrud(this, this);
+		control.init(null);
 
-		setMainContent(crud);
+		setMainContent(control);
 		refresh();
 	}
 
@@ -49,6 +49,6 @@ public class CustomerController implements Initializable, OnRefreshListener, OnP
 
 	@Override
 	public void refresh() {
-		crud.load(CustomerRepository.list());
+		control.load(CustomerRepository.list());
 	}
 }
